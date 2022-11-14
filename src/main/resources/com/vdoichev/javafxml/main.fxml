@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="420.0" minWidth="340.0" prefHeight="420.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vdoichev.javafxml.MainController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="420.0" minWidth="340.0" prefHeight="420.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vdoichev.javafxml.controllers.MainController">
     <children>
         <HBox maxHeight="30.0" prefHeight="30.0">
             <children>

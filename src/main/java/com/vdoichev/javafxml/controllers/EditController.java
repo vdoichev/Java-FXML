@@ -1,12 +1,11 @@
-package com.vdoichev.javafxml;
+package com.vdoichev.javafxml.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 
-public class editController {
+public class EditController {
     @FXML
     public Label lblPhone;
     @FXML
