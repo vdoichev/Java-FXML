@@ -8,21 +8,15 @@ import javafx.scene.layout.VBox;
 
 public class editController {
     @FXML
-    public VBox leftPanel;
+    public Label lblPhone;
     @FXML
-    public Label labelPhone;
+    public Label lblName;
     @FXML
-    public Label labelName;
+    public TextField txtPhone;
     @FXML
-    public VBox centerPanel;
+    public TextField txtName;
     @FXML
-    public TextField textPhone;
+    public Button btnConfirm;
     @FXML
-    public TextField textName;
-    @FXML
-    public VBox rightPanel;
-    @FXML
-    public Button okButton;
-    @FXML
-    public Button cancelButton;
+    public Button btnCancel;
 }

@@ -7,64 +7,61 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0"
-            prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.vdoichev.javafxml.editController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vdoichev.javafxml.editController">
     <left>
-        <VBox fx:id="leftPanel" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="labelPhone" text="Имя">
+                <Label fx:id="lblName" text="Имя">
                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </Label>
-                <Label fx:id="labelName" text="Телефон">
+                <Label fx:id="lblPhone" text="Телефон">
                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="15.0"/>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
                     </VBox.margin>
                 </Label>
             </children>
             <BorderPane.margin>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </BorderPane.margin>
         </VBox>
     </left>
     <center>
-        <VBox fx:id="centerPanel" minWidth="200.0" prefHeight="120.0" prefWidth="133.0" BorderPane.alignment="CENTER">
+        <VBox minWidth="200.0" prefHeight="120.0" prefWidth="133.0" BorderPane.alignment="CENTER">
             <children>
-                <TextField fx:id="textPhone">
+                <TextField fx:id="txtPhone">
                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </TextField>
-                <TextField fx:id="textName">
+                <TextField fx:id="txtName">
                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </TextField>
             </children>
             <BorderPane.margin>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </BorderPane.margin>
         </VBox>
     </center>
     <right>
-        <VBox fx:id="rightPanel" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="okButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" text="Ок">
+                <Button fx:id="btnConfirm" mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" text="Ок">
                     <VBox.margin>
-                        <Insets bottom="5.0" left="25.0" right="5.0" top="5.0"/>
+                        <Insets bottom="5.0" left="25.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </Button>
-                <Button fx:id="cancelButton" mnemonicParsing="false" text="Отмена">
+                <Button fx:id="btnCancel" mnemonicParsing="false" text="Отмена">
                     <VBox.margin>
-                        <Insets bottom="5.0" left="25.0" right="5.0" top="5.0"/>
+                        <Insets bottom="5.0" left="25.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </Button>
             </children>
             <BorderPane.margin>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </BorderPane.margin>
         </VBox>
     </right>

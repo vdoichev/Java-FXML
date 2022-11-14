@@ -7,8 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -17,31 +15,23 @@ import java.util.Objects;
 
 public class MainController {
     @FXML
-    public Button addButton;
+    public Button btnAdd;
     @FXML
-    public Label rowsCount;
+    public Label lblRowsCount;
     @FXML
-    public AnchorPane panel4;
+    public Button btnEdit;
     @FXML
-    public HBox panel1;
+    public Button btnDelete;
     @FXML
-    public Button editButton;
+    public TextField txtSearch;
     @FXML
-    public Button deleteButton;
+    public Button btnSearch;
     @FXML
-    public AnchorPane panel2;
+    public TableView tblAddress;
     @FXML
-    public TextField searchField;
+    public TableColumn clmnName;
     @FXML
-    public Button searchButton;
-    @FXML
-    public AnchorPane panel3;
-    @FXML
-    public TableView tableView;
-    @FXML
-    public TableColumn column1;
-    @FXML
-    public TableColumn column2;
+    public TableColumn clmnPhone;
 
     @FXML
     public void onShowDialog(ActionEvent actionEvent) {
