@@ -6,7 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -16,6 +18,30 @@ import java.util.Objects;
 public class MainController {
     @FXML
     public Button addButton;
+    @FXML
+    public Label rowsCount;
+    @FXML
+    public AnchorPane panel4;
+    @FXML
+    public HBox panel1;
+    @FXML
+    public Button editButton;
+    @FXML
+    public Button deleteButton;
+    @FXML
+    public AnchorPane panel2;
+    @FXML
+    public TextField searchField;
+    @FXML
+    public Button searchButton;
+    @FXML
+    public AnchorPane panel3;
+    @FXML
+    public TableView tableView;
+    @FXML
+    public TableColumn column1;
+    @FXML
+    public TableColumn column2;
 
     @FXML
     public void onShowDialog(ActionEvent actionEvent) {

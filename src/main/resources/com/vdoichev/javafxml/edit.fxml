@@ -9,16 +9,17 @@
 
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0"
-            prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+            prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.vdoichev.javafxml.editController">
     <left>
-        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+        <VBox fx:id="leftPanel" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-                <Label text="Имя">
+                <Label fx:id="labelPhone" text="Имя">
                     <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                     </VBox.margin>
                 </Label>
-                <Label text="Телефон">
+                <Label fx:id="labelName" text="Телефон">
                     <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="15.0"/>
                     </VBox.margin>
@@ -30,14 +31,14 @@
         </VBox>
     </left>
     <center>
-        <VBox minWidth="200.0" prefHeight="120.0" prefWidth="133.0" BorderPane.alignment="CENTER">
+        <VBox fx:id="centerPanel" minWidth="200.0" prefHeight="120.0" prefWidth="133.0" BorderPane.alignment="CENTER">
             <children>
-                <TextField>
+                <TextField fx:id="textPhone">
                     <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                     </VBox.margin>
                 </TextField>
-                <TextField>
+                <TextField fx:id="textName">
                     <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                     </VBox.margin>
@@ -49,14 +50,14 @@
         </VBox>
     </center>
     <right>
-        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+        <VBox fx:id="rightPanel" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-                <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" text="Ок">
+                <Button fx:id="okButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" text="Ок">
                     <VBox.margin>
                         <Insets bottom="5.0" left="25.0" right="5.0" top="5.0"/>
                     </VBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" text="Отмена">
+                <Button fx:id="cancelButton" mnemonicParsing="false" text="Отмена">
                     <VBox.margin>
                         <Insets bottom="5.0" left="25.0" right="5.0" top="5.0"/>
                     </VBox.margin>
