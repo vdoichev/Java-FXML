@@ -57,6 +57,26 @@ public class MainController {
 
     @FXML
     public void onShowDialog(ActionEvent actionEvent) {
+        Object source = actionEvent.getSource();
+        if (!(source instanceof Button)){
+            return;
+        }
+
+        Button clickedButton = (Button) source;
+        Person selectedPerson = (Person) tblAddress.getSelectionModel().getSelectedItem();
+
+        switch (clickedButton.getId()){
+            case "btnAdd":
+                System.out.println("add "+selectedPerson);
+                break;
+            case "btnEdit":
+                System.out.println("edit "+selectedPerson);
+                break;
+            case "btnDelete":
+                System.out.println("delete "+selectedPerson);
+                break;
+        }
+
         try {
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(HelloApplication.class.getResource("edit.fxml"));
