@@ -11,12 +11,12 @@
     <left>
         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="lblName" text="Имя">
+                <Label fx:id="lblName" text="%key.fio">
                     <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </Label>
-                <Label fx:id="lblPhone" text="Телефон">
+                <Label fx:id="lblPhone" text="%key.phone">
                     <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
                     </VBox.margin>
@@ -49,12 +49,12 @@
     <right>
         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#actionSave" prefHeight="26.0" prefWidth="62.0" text="Ок">
+                <Button fx:id="btnConfirm" minWidth="80.0" mnemonicParsing="false" onAction="#actionSave" prefHeight="26.0" prefWidth="80.0" text="%key.submit">
                     <VBox.margin>
                         <Insets bottom="5.0" left="25.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </Button>
-                <Button fx:id="btnCancel" cancelButton="true" mnemonicParsing="false" onAction="#actionCancel" text="Отмена">
+                <Button fx:id="btnCancel" cancelButton="true" minWidth="80.0" mnemonicParsing="false" onAction="#actionCancel" prefWidth="80.0" text="%key.cancel">
                     <VBox.margin>
                         <Insets bottom="5.0" left="25.0" right="5.0" top="5.0" />
                     </VBox.margin>

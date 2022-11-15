@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="javafx-preloader" name="Java-FXML">
+    <output-path>$PROJECT_DIR$/out/artifacts/Java_FXML</output-path>
+    <root id="archive" name="Java-FXML.jar">
+      <element id="archive" name="Java_FXML.jar">
+        <element id="module-output" name="Java-FXML" />
+      </element>
+    </root>
+  </artifact>
+</component>

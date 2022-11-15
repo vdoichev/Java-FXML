@@ -8,7 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,11 +16,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
-public class MainController {
+public class MainController implements Initializable {
     private final CollectionAddressBook addressBook = new CollectionAddressBook();
     private Stage mainStage;
     @FXML
@@ -45,23 +47,10 @@ public class MainController {
     private Parent fxmlEdit;
     private EditController editDialogController;
     private Stage editDialogStage;
-
+    private ResourceBundle resourceBundle;
 
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
-    }
-
-    @FXML
-    private void initialize() {
-        clmnName.setCellValueFactory(new PropertyValueFactory<Person, String>("fio"));
-        clmnPhone.setCellValueFactory(new PropertyValueFactory<Person, String>("phone"));
-
-        initListeners();
-
-        addressBook.autoComplete();
-        tblAddress.setItems(addressBook.getPersonList());
-
-        initLoader();
     }
 
     private void initListeners() {
@@ -83,6 +72,8 @@ public class MainController {
     private void initLoader() {
         try {
             fxmlLoader.setLocation(HelloApplication.class.getResource("edit.fxml"));
+            fxmlLoader.setResources(ResourceBundle.getBundle("com.vdoichev.javafxml.Locale",
+                    new Locale("uk")));
             fxmlEdit = fxmlLoader.load();
             editDialogController = fxmlLoader.getController();
         } catch (IOException e) {
@@ -91,7 +82,7 @@ public class MainController {
     }
 
     private void updateCountLabel() {
-        lblRowsCount.setText("Количество записей: " + addressBook.getPersonList().size());
+        lblRowsCount.setText(resourceBundle.getString("key.count")+": " + addressBook.getPersonList().size());
     }
 
     @FXML
@@ -124,7 +115,7 @@ public class MainController {
     private void showDialog() {
         if (editDialogStage == null) {
             editDialogStage = new Stage();
-            editDialogStage.setTitle("Редактирование записи");
+            editDialogStage.setTitle(resourceBundle.getString("key.titleEdit"));
             editDialogStage.setMinHeight(150);
             editDialogStage.setMinWidth(300);
             editDialogStage.setResizable(false);
@@ -133,5 +124,19 @@ public class MainController {
             editDialogStage.initOwner(mainStage);
         }
         editDialogStage.showAndWait();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.resourceBundle = resourceBundle;
+        clmnName.setCellValueFactory(new PropertyValueFactory<Person, String>("fio"));
+        clmnPhone.setCellValueFactory(new PropertyValueFactory<Person, String>("phone"));
+
+        initListeners();
+
+        addressBook.autoComplete();
+        tblAddress.setItems(addressBook.getPersonList());
+
+        initLoader();
     }
 }
