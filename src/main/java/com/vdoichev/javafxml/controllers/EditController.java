@@ -29,12 +29,26 @@ public class EditController {
     public void actionCancel(ActionEvent actionEvent) {
         Node sourse = (Node) actionEvent.getSource();
         Stage stage = (Stage) sourse.getScene().getWindow();
-        stage.close();
+        stage.hide();
     }
 
     public void setPerson(Person person) {
+        if (person == null) {
+            return;
+        }
         this.person = person;
         txtName.setText(person.getFio());
         txtPhone.setText(person.getPhone());
+    }
+
+    @FXML
+    public void actionSave(ActionEvent actionEvent) {
+        person.setFio(txtName.getText());
+        person.setPhone(txtPhone.getText());
+        actionCancel(actionEvent);
+    }
+
+    public Person getPerson() {
+        return person;
     }
 }

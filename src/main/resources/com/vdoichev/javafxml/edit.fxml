@@ -49,7 +49,7 @@
     <right>
         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnConfirm" mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" text="Ок">
+                <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#actionSave" prefHeight="26.0" prefWidth="62.0" text="Ок">
                     <VBox.margin>
                         <Insets bottom="5.0" left="25.0" right="5.0" top="5.0" />
                     </VBox.margin>
