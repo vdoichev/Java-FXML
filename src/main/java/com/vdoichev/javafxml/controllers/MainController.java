@@ -3,9 +3,12 @@ package com.vdoichev.javafxml.controllers;
 import com.vdoichev.javafxml.HelloApplication;
 import com.vdoichev.javafxml.interfaces.impls.CollectionAddressBook;
 import com.vdoichev.javafxml.objects.Person;
+import com.vdoichev.javafxml.utils.DialogManager;
+import javafx.beans.property.ObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,11 +16,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.controlsfx.control.textfield.CustomTextField;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -34,7 +39,7 @@ public class MainController implements Initializable {
     @FXML
     public Button btnDelete;
     @FXML
-    public TextField txtSearch;
+    public CustomTextField txtSearch;
     @FXML
     public Button btnSearch;
     @FXML
@@ -48,6 +53,7 @@ public class MainController implements Initializable {
     private EditController editDialogController;
     private Stage editDialogStage;
     private ResourceBundle resourceBundle;
+    private ObservableList<Person> backupList;
 
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
@@ -58,13 +64,10 @@ public class MainController implements Initializable {
             updateCountLabel();
         });
 
-        tblAddress.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (mouseEvent.getClickCount() == 2) {
-                    editDialogController.setPerson((Person) tblAddress.getSelectionModel().getSelectedItem());
-                    showDialog();
-                }
+        tblAddress.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getClickCount() == 2) {
+                editDialogController.setPerson(tblAddress.getSelectionModel().getSelectedItem());
+                showDialog();
             }
         });
     }
@@ -82,34 +85,48 @@ public class MainController implements Initializable {
     }
 
     private void updateCountLabel() {
-        lblRowsCount.setText(resourceBundle.getString("key.count")+": " + addressBook.getPersonList().size());
+        lblRowsCount.setText(resourceBundle.getString("key.count") + ": " + addressBook.getPersonList().size());
     }
 
     @FXML
     public void onShowDialog(ActionEvent actionEvent) {
         Object source = actionEvent.getSource();
-        if (!(source instanceof Button)) {
+        if (!(source instanceof Button clickedButton)) {
             return;
         }
 
-        Button clickedButton = (Button) source;
-        Person selectedPerson = (Person) tblAddress.getSelectionModel().getSelectedItem();
+        Person selectedPerson = tblAddress.getSelectionModel().getSelectedItem();
         editDialogController.setPerson(selectedPerson);
 
         switch (clickedButton.getId()) {
-            case "btnAdd":
+            case "btnAdd" -> {
                 editDialogController.setPerson(new Person());
                 showDialog();
                 addressBook.add(editDialogController.getPerson());
-                break;
-            case "btnEdit":
-                editDialogController.setPerson((Person) tblAddress.getSelectionModel().getSelectedItem());
+            }
+            case "btnEdit" -> {
+                if (!personIsSelected(selectedPerson)) {
+                    return;
+                }
+                editDialogController.setPerson(tblAddress.getSelectionModel().getSelectedItem());
                 showDialog();
-                break;
-            case "btnDelete":
-                addressBook.delete((Person) tblAddress.getSelectionModel().getSelectedItem());
-                break;
+            }
+            case "btnDelete" -> {
+                if (!personIsSelected(selectedPerson)) {
+                    return;
+                }
+                addressBook.delete(tblAddress.getSelectionModel().getSelectedItem());
+            }
         }
+    }
+
+    private boolean personIsSelected(Person selectedPerson) {
+        if (selectedPerson == null){
+            DialogManager.showErrorDialog(resourceBundle.getString("key.error"),
+                    resourceBundle.getString("key.select.person"));
+            return false;
+        }
+        return true;
     }
 
     private void showDialog() {
@@ -129,14 +146,40 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
-        clmnName.setCellValueFactory(new PropertyValueFactory<Person, String>("fio"));
-        clmnPhone.setCellValueFactory(new PropertyValueFactory<Person, String>("phone"));
+        clmnName.setCellValueFactory(new PropertyValueFactory<>("fio"));
+        clmnPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
         initListeners();
 
         addressBook.autoComplete();
+        backupList = FXCollections.observableArrayList();
+        backupList.addAll(addressBook.getPersonList());
         tblAddress.setItems(addressBook.getPersonList());
 
         initLoader();
+        setupClearButtonField(txtSearch);
+    }
+
+    private void setupClearButtonField(CustomTextField customTextField) {
+        try {
+            Method m = TextFields.class.getDeclaredMethod("setupClearButtonField",
+                    TextField.class, ObjectProperty.class);
+            m.setAccessible(true);
+            m.invoke(null,customTextField,customTextField.rightProperty());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void actionSearch(ActionEvent actionEvent) {
+        addressBook.getPersonList().clear();
+        for (Person person : backupList) {
+            if (person.getFio().toLowerCase().contains(txtSearch.getText().toLowerCase()) ||
+                    (person.getPhone().toLowerCase().contains(txtSearch.getText().toLowerCase()))
+            ) {
+                addressBook.getPersonList().add(person);
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.vdoichev.javafxml.controllers;
 
 import com.vdoichev.javafxml.objects.Person;
+import com.vdoichev.javafxml.utils.DialogManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -48,6 +49,9 @@ public class EditController implements Initializable {
 
     @FXML
     public void actionSave(ActionEvent actionEvent) {
+        if (!checkValues()){
+            return;
+        }
         person.setFio(txtName.getText());
         person.setPhone(txtPhone.getText());
         actionCancel(actionEvent);
@@ -60,5 +64,13 @@ public class EditController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
+    }
+
+    private boolean checkValues(){
+        if (txtName.getText().trim().length() == 0 || txtPhone.getText().trim().length()==0){
+            DialogManager.showInfoDialog(resourceBundle.getString("key.error"),
+                    resourceBundle.getString("key.fill.field"));
+        }
+        return true;
     }
 }
