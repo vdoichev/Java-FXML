@@ -2,13 +2,16 @@ package com.vdoichev.javafxml.controllers;
 
 import com.vdoichev.javafxml.HelloApplication;
 import com.vdoichev.javafxml.interfaces.impls.CollectionAddressBook;
+import com.vdoichev.javafxml.objects.Lang;
 import com.vdoichev.javafxml.objects.Person;
 import com.vdoichev.javafxml.utils.DialogManager;
-import javafx.beans.property.ObjectProperty;
+import com.vdoichev.javafxml.utils.LocaleManager;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,15 +22,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.controlsfx.control.textfield.CustomTextField;
-import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Locale;
+import java.util.Observable;
 import java.util.ResourceBundle;
 
-public class MainController implements Initializable {
+public class MainController extends Observable implements Initializable {
     private final CollectionAddressBook addressBook = new CollectionAddressBook();
     private Stage mainStage;
     @FXML
@@ -48,6 +50,8 @@ public class MainController implements Initializable {
     public TableColumn<Person, String> clmnName;
     @FXML
     public TableColumn<Person, String> clmnPhone;
+    @FXML
+    public ComboBox<Lang> comboLocales;
     private final FXMLLoader fxmlLoader = new FXMLLoader();
     private Parent fxmlEdit;
     private EditController editDialogController;
@@ -68,6 +72,16 @@ public class MainController implements Initializable {
             if (mouseEvent.getClickCount() == 2) {
                 editDialogController.setPerson(tblAddress.getSelectionModel().getSelectedItem());
                 showDialog();
+            }
+        });
+
+        comboLocales.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Lang selectedLang = (Lang) comboLocales.getSelectionModel().getSelectedItem();
+                LocaleManager.setCurrentLang(selectedLang);
+                setChanged();
+                notifyObservers(selectedLang);
             }
         });
     }
@@ -157,18 +171,19 @@ public class MainController implements Initializable {
         tblAddress.setItems(addressBook.getPersonList());
 
         initLoader();
+        fillLangComboBox();
         setupClearButtonField(txtSearch);
     }
 
     private void setupClearButtonField(CustomTextField customTextField) {
-        try {
-            Method m = TextFields.class.getDeclaredMethod("setupClearButtonField",
-                    TextField.class, ObjectProperty.class);
-            m.setAccessible(true);
-            m.invoke(null,customTextField,customTextField.rightProperty());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+//        try {
+//            Method m = TextFields.class.getDeclaredMethod("setupClearButtonField",
+//                    TextField.class, ObjectProperty.class);
+//            m.setAccessible(true);
+//            m.invoke(null, customTextField, customTextField.rightProperty());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @FXML
@@ -180,6 +195,25 @@ public class MainController implements Initializable {
             ) {
                 addressBook.getPersonList().add(person);
             }
+        }
+    }
+
+    private void fillLangComboBox(){
+        //Lang langUK = new Lang("UK_CODE", resourceBundle.getString("uk"), LocaleManager.UK_LOCALE,
+        //        0);
+        Lang langRU = new Lang("RU_CODE", resourceBundle.getString("ru"), LocaleManager.RU_LOCALE,
+                2);
+        Lang langEN = new Lang("EN_CODE", resourceBundle.getString("en"), LocaleManager.EN_LOCALE,
+                0);
+
+        //comboLocales.getItems().add(langUK);
+        comboLocales.getItems().add(langRU);
+        comboLocales.getItems().add(langEN);
+
+        if (LocaleManager.getCurrentLang() == null){
+            comboLocales.getSelectionModel().select(0);
+        }else {
+            comboLocales.getSelectionModel().select(LocaleManager.getCurrentLang().getIndex());
         }
     }
 }

@@ -2,35 +2,43 @@ package com.vdoichev.javafxml;
 
 import com.vdoichev.javafxml.controllers.MainController;
 import com.vdoichev.javafxml.interfaces.impls.CollectionAddressBook;
+import com.vdoichev.javafxml.objects.Lang;
+import com.vdoichev.javafxml.utils.LocaleManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class HelloApplication extends Application {
+public class HelloApplication extends Application implements Observer {
+    private static final String FXML_MAIN = "main.fxml";
+    public static final String BUNDLES_FOLDER = "com.vdoichev.javafxml.Locale";
+
+    private Stage primaryStage;
+    private  Parent fxmlMain;
+    private MainController mainController;
+    private FXMLLoader fxmlLoader;
+    private VBox currentRoot;
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("main.fxml"));
-        fxmlLoader.setResources(ResourceBundle.getBundle("com.vdoichev.javafxml.Locale",
-                new Locale("uk")));
+    public void start(Stage primaryStage) throws IOException {
+        this.primaryStage = primaryStage;
+        createGUI(LocaleManager.RU_LOCALE);
+    }
 
-        Parent fxmlMain = fxmlLoader.load();
-        MainController mainController = fxmlLoader.getController();
-        mainController.setMainStage(stage);
-
-        stage.setTitle(fxmlLoader.getResources().getString("key.address.book"));
-        stage.setMinHeight(440);
-        stage.setMinWidth(340);
-        stage.setScene(new Scene(fxmlMain, 340,440));
-        stage.show();
-
-        testData();
+    private void createGUI(Locale locale) {
+        currentRoot = loadFXML(locale);
+        Scene scene = new Scene(currentRoot,340,440);
+        primaryStage.setScene(scene);
+        primaryStage.setMinHeight(440);
+        primaryStage.setMinWidth(340);
+        primaryStage.show();
     }
 
     private void testData() {
@@ -41,5 +49,31 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        Lang lang = (Lang) arg;
+        VBox newMode = loadFXML(lang.getLocale());
+        currentRoot.getChildren().setAll(newMode.getChildren());
+    }
+
+    private VBox loadFXML(Locale locale){
+        fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource(FXML_MAIN));
+        fxmlLoader.setResources(ResourceBundle.getBundle(BUNDLES_FOLDER, locale));
+
+        VBox node = null;
+
+        try {
+            node = (VBox) fxmlLoader.load();
+            mainController = fxmlLoader.getController();
+            mainController.addObserver(this);
+            primaryStage.setTitle(fxmlLoader.getResources().getString("key.address.book"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return node;
     }
 }
