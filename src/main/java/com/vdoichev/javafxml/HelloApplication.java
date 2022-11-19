@@ -71,7 +71,7 @@ public class HelloApplication extends Application implements Observer {
             mainController.addObserver(this);
             primaryStage.setTitle(fxmlLoader.getResources().getString("key.address.book"));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
         return node;

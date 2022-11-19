@@ -29,7 +29,10 @@ import java.util.Locale;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
+import static com.vdoichev.javafxml.HelloApplication.BUNDLES_FOLDER;
+
 public class MainController extends Observable implements Initializable {
+    private static final String FXML_EDIT = "edit.fxml";
     private final CollectionAddressBook addressBook = new CollectionAddressBook();
     private Stage mainStage;
     @FXML
@@ -58,6 +61,9 @@ public class MainController extends Observable implements Initializable {
     private Stage editDialogStage;
     private ResourceBundle resourceBundle;
     private ObservableList<Person> backupList;
+    private static final String RU_CODE="ru";
+    private static final String EN_CODE="en";
+    private static final String UK_CODE="uk";
 
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
@@ -88,9 +94,9 @@ public class MainController extends Observable implements Initializable {
 
     private void initLoader() {
         try {
-            fxmlLoader.setLocation(HelloApplication.class.getResource("edit.fxml"));
-            fxmlLoader.setResources(ResourceBundle.getBundle("com.vdoichev.javafxml.Locale",
-                    new Locale("uk")));
+            fxmlLoader.setLocation(HelloApplication.class.getResource(FXML_EDIT));
+            fxmlLoader.setResources(ResourceBundle.getBundle(BUNDLES_FOLDER,
+                    LocaleManager.getCurrentLang().getLocale()));
             fxmlEdit = fxmlLoader.load();
             editDialogController = fxmlLoader.getController();
         } catch (IOException e) {
@@ -169,9 +175,9 @@ public class MainController extends Observable implements Initializable {
         backupList = FXCollections.observableArrayList();
         backupList.addAll(addressBook.getPersonList());
         tblAddress.setItems(addressBook.getPersonList());
-
-        initLoader();
         fillLangComboBox();
+        initLoader();
+
         setupClearButtonField(txtSearch);
     }
 
@@ -199,18 +205,16 @@ public class MainController extends Observable implements Initializable {
     }
 
     private void fillLangComboBox(){
-        //Lang langUK = new Lang("UK_CODE", resourceBundle.getString("uk"), LocaleManager.UK_LOCALE,
-        //        0);
-        Lang langRU = new Lang("RU_CODE", resourceBundle.getString("ru"), LocaleManager.RU_LOCALE,
-                2);
-        Lang langEN = new Lang("EN_CODE", resourceBundle.getString("en"), LocaleManager.EN_LOCALE,
-                0);
+        Lang langUK = new Lang(0, UK_CODE, resourceBundle.getString("key.uk"), LocaleManager.UK_LOCALE);
+        Lang langRU = new Lang(1, RU_CODE, resourceBundle.getString("key.ru"), LocaleManager.RU_LOCALE);
+        Lang langEN = new Lang(2, EN_CODE, resourceBundle.getString("key.en"), LocaleManager.EN_LOCALE);
 
-        //comboLocales.getItems().add(langUK);
+        comboLocales.getItems().add(langUK);
         comboLocales.getItems().add(langRU);
         comboLocales.getItems().add(langEN);
 
         if (LocaleManager.getCurrentLang() == null){
+            LocaleManager.setCurrentLang(langUK);
             comboLocales.getSelectionModel().select(0);
         }else {
             comboLocales.getSelectionModel().select(LocaleManager.getCurrentLang().getIndex());

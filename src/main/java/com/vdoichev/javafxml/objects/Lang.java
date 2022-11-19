@@ -40,7 +40,7 @@ public class Lang {
         this.index = index;
     }
 
-    public Lang(String code, String name, Locale locale, int index) {
+    public Lang(int index, String code, String name, Locale locale) {
         this.code = code;
         this.name = name;
         this.locale = locale;
