@@ -12,18 +12,30 @@ public class CollectionAddressBook implements IAddressBook {
     private ObservableList<Person> personList = FXCollections.observableArrayList();
 
     @Override
-    public void add(Person person) {
+    public boolean add(Person person) {
         personList.add(person);
+        return true;
     }
 
     @Override
-    public void edit(Person person) {
-
+    public boolean update(Person person) {
+        return true;
     }
 
     @Override
-    public void delete(Person person) {
+    public boolean delete(Person person) {
         personList.remove(person);
+        return true;
+    }
+
+    @Override
+    public ObservableList<Person> findAll() {
+        return null;
+    }
+
+    @Override
+    public ObservableList<Person> find(String text) {
+        return null;
     }
 
     public ObservableList<Person> getPersonList() {
@@ -39,9 +51,9 @@ public class CollectionAddressBook implements IAddressBook {
     }
 
     public void autoComplete() {
-        personList.add(new Person("Дойчев В.И.", "+380762323224"));
-        personList.add(new Person("Смоков С.И.", "+380765636542"));
-        personList.add(new Person("Степанов В.А.", "+380763452352"));
-        personList.add(new Person("Иванов С.С.", "+380762423422"));
+        personList.add(new Person(1,"Дойчев В.И.", "+380762323224"));
+        personList.add(new Person(2,"Смоков С.И.", "+380765636542"));
+        personList.add(new Person(3,"Степанов В.А.", "+380763452352"));
+        personList.add(new Person(4,"Иванов С.С.", "+380762423422"));
     }
 }

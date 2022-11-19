@@ -1,11 +1,15 @@
 package com.vdoichev.javafxml.interfaces;
 
 import com.vdoichev.javafxml.objects.Person;
+import javafx.collections.ObservableList;
 
 public interface IAddressBook {
-    void add(Person person);
+    boolean add(Person person);
 
-    void edit(Person person);
+    boolean update(Person person);
 
-    void delete(Person person);
+    boolean delete(Person person);
+
+    ObservableList<Person> findAll();
+    ObservableList<Person> find(String text);
 }

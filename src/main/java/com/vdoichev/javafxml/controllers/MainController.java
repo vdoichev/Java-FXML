@@ -2,11 +2,13 @@ package com.vdoichev.javafxml.controllers;
 
 import com.vdoichev.javafxml.HelloApplication;
 import com.vdoichev.javafxml.interfaces.impls.CollectionAddressBook;
+import com.vdoichev.javafxml.interfaces.impls.DBAddressBook;
 import com.vdoichev.javafxml.objects.Lang;
 import com.vdoichev.javafxml.objects.Person;
 import com.vdoichev.javafxml.utils.DialogManager;
 import com.vdoichev.javafxml.utils.LocaleManager;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -22,10 +24,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.controlsfx.control.textfield.CustomTextField;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.Locale;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
@@ -33,7 +36,8 @@ import static com.vdoichev.javafxml.HelloApplication.BUNDLES_FOLDER;
 
 public class MainController extends Observable implements Initializable {
     private static final String FXML_EDIT = "edit.fxml";
-    private final CollectionAddressBook addressBook = new CollectionAddressBook();
+    //private final CollectionAddressBook addressBook = new CollectionAddressBook();
+    private final DBAddressBook addressBook = new DBAddressBook();
     private Stage mainStage;
     @FXML
     public Button btnAdd;
@@ -60,10 +64,10 @@ public class MainController extends Observable implements Initializable {
     private EditController editDialogController;
     private Stage editDialogStage;
     private ResourceBundle resourceBundle;
-    private ObservableList<Person> backupList;
-    private static final String RU_CODE="ru";
-    private static final String EN_CODE="en";
-    private static final String UK_CODE="uk";
+    //private ObservableList<Person> backupList;
+    private static final String RU_CODE = "ru";
+    private static final String EN_CODE = "en";
+    private static final String UK_CODE = "uk";
 
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
@@ -141,7 +145,7 @@ public class MainController extends Observable implements Initializable {
     }
 
     private boolean personIsSelected(Person selectedPerson) {
-        if (selectedPerson == null){
+        if (selectedPerson == null) {
             DialogManager.showErrorDialog(resourceBundle.getString("key.error"),
                     resourceBundle.getString("key.select.person"));
             return false;
@@ -169,16 +173,16 @@ public class MainController extends Observable implements Initializable {
         clmnName.setCellValueFactory(new PropertyValueFactory<>("fio"));
         clmnPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
+        setupClearButtonField(txtSearch);
         initListeners();
 
-        addressBook.autoComplete();
-        backupList = FXCollections.observableArrayList();
-        backupList.addAll(addressBook.getPersonList());
-        tblAddress.setItems(addressBook.getPersonList());
+        //addressBook.autoComplete();
+        ObservableList<Person> backupList = addressBook.findAll();
+        tblAddress.setItems(backupList);
         fillLangComboBox();
         initLoader();
 
-        setupClearButtonField(txtSearch);
+
     }
 
     private void setupClearButtonField(CustomTextField customTextField) {
@@ -194,17 +198,15 @@ public class MainController extends Observable implements Initializable {
 
     @FXML
     public void actionSearch(ActionEvent actionEvent) {
-        addressBook.getPersonList().clear();
-        for (Person person : backupList) {
-            if (person.getFio().toLowerCase().contains(txtSearch.getText().toLowerCase()) ||
-                    (person.getPhone().toLowerCase().contains(txtSearch.getText().toLowerCase()))
-            ) {
-                addressBook.getPersonList().add(person);
-            }
+
+        if (txtSearch.getText().trim().length() == 0) {
+            addressBook.findAll();
         }
+
+        addressBook.find(txtSearch.getText());
     }
 
-    private void fillLangComboBox(){
+    private void fillLangComboBox() {
         Lang langUK = new Lang(0, UK_CODE, resourceBundle.getString("key.uk"), LocaleManager.UK_LOCALE);
         Lang langRU = new Lang(1, RU_CODE, resourceBundle.getString("key.ru"), LocaleManager.RU_LOCALE);
         Lang langEN = new Lang(2, EN_CODE, resourceBundle.getString("key.en"), LocaleManager.EN_LOCALE);
@@ -213,10 +215,10 @@ public class MainController extends Observable implements Initializable {
         comboLocales.getItems().add(langRU);
         comboLocales.getItems().add(langEN);
 
-        if (LocaleManager.getCurrentLang() == null){
+        if (LocaleManager.getCurrentLang() == null) {
             LocaleManager.setCurrentLang(langUK);
             comboLocales.getSelectionModel().select(0);
-        }else {
+        } else {
             comboLocales.getSelectionModel().select(LocaleManager.getCurrentLang().getIndex());
         }
     }

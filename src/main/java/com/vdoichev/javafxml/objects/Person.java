@@ -1,17 +1,31 @@
 package com.vdoichev.javafxml.objects;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Person {
+    private SimpleIntegerProperty id = new SimpleIntegerProperty();
     private SimpleStringProperty fio = new SimpleStringProperty("");
     private SimpleStringProperty phone = new SimpleStringProperty("");
 
     public Person(){
-
     }
-    public Person(String name, String phone) {
-        this.fio = new SimpleStringProperty(name);
+    public Person(int id, String fio, String phone) {
+        this.fio = new SimpleStringProperty(fio);
         this.phone = new SimpleStringProperty(phone);
+        this.id = new SimpleIntegerProperty(id);
+    }
+
+    public int getId() {
+        return id.get();
+    }
+
+    public SimpleIntegerProperty idProperty() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
     }
 
     public String getFio() {
