@@ -37,12 +37,39 @@ public class DBAddressBook implements IAddressBook {
 
     @Override
     public boolean update(Person person) {
-        throw new UnsupportedOperationException("Not implemented, yet");
+        try (Connection con = MySQLConnection.getConnection()) {
+            String sql = "UPDATE addressbook.person SET FIO = ?, PHONE=? WHERE ID = ?";
+            PreparedStatement statement = con.prepareStatement(sql,
+                    Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, person.getFio());
+            statement.setString(2, person.getPhone());
+            statement.setInt(3, person.getId());
+            int result = statement.executeUpdate();
+            if (result > 0) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 
     @Override
     public boolean delete(Person person) {
-        throw new UnsupportedOperationException("Not implemented, yet");
+        try (Connection con = MySQLConnection.getConnection()) {
+            String sql = "DELETE FROM addressbook.person WHERE (ID = ?)";
+            PreparedStatement statement = con.prepareStatement(sql,
+                    Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, person.getId());
+            int result = statement.executeUpdate();
+            if (result > 0) {
+                personList.remove(person);
+                return true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 
     @Override

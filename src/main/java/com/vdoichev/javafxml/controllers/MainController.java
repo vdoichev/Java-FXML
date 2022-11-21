@@ -82,6 +82,7 @@ public class MainController extends Observable implements Initializable {
             if (mouseEvent.getClickCount() == 2) {
                 editDialogController.setPerson(tblAddress.getSelectionModel().getSelectedItem());
                 showDialog();
+                addressBook.update(editDialogController.getPerson());
             }
         });
 
@@ -134,6 +135,7 @@ public class MainController extends Observable implements Initializable {
                 }
                 editDialogController.setPerson(tblAddress.getSelectionModel().getSelectedItem());
                 showDialog();
+                addressBook.update(editDialogController.getPerson());
             }
             case "btnDelete" -> {
                 if (!personIsSelected(selectedPerson)) {
