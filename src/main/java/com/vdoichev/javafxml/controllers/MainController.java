@@ -86,6 +86,8 @@ public class MainController extends Observable implements Initializable {
             }
         });
 
+
+
         comboLocales.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
