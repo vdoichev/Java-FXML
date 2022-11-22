@@ -93,7 +93,26 @@ public class DBAddressBook implements IAddressBook {
 
     @Override
     public ObservableList<Person> find(String text) {
-        throw new UnsupportedOperationException("Not implemented, yet");
+        personList.clear();
+        String sql = "select * from person where fio like? or phone like ?";
+        try(Connection con = MySQLConnection.getConnection();
+            PreparedStatement statement = con.prepareStatement(sql)) {
+            String searchStr = "%"+text+"%";
+            statement.setString(1, searchStr);
+            statement.setString(2, searchStr);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()){
+                Person person = new Person();
+                person.setId(rs.getInt("id"));
+                person.setFio(rs.getString("fio"));
+                person.setPhone(rs.getString("phone"));
+                personList.add(person);
+            }
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return personList;
     }
 
     public ObservableList<Person> getPersonList() {
