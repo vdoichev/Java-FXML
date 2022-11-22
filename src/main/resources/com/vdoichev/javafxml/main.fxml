@@ -11,60 +11,74 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.control.textfield.CustomTextField?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="420.0" minWidth="340.0" prefHeight="420.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vdoichev.javafxml.controllers.MainController">
+<?import java.net.URL?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="420.0" minWidth="340.0" prefHeight="420.0" prefWidth="340.0"
+      xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.vdoichev.javafxml.controllers.MainController">
     <children>
         <HBox maxHeight="30.0" prefHeight="30.0">
             <children>
                 <Button fx:id="btnAdd" minWidth="80.0" mnemonicParsing="false" onAction="#onShowDialog" text="%key.add">
                     <HBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
                     </HBox.margin>
                 </Button>
-                <Button fx:id="btnEdit" minWidth="80.0" mnemonicParsing="false" onAction="#onShowDialog" text="%key.edit">
+                <Button fx:id="btnEdit" minWidth="80.0" mnemonicParsing="false" onAction="#onShowDialog"
+                        text="%key.edit">
                     <HBox.margin>
-                        <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+                        <Insets bottom="20.0" left="10.0" right="10.0" top="20.0"/>
                     </HBox.margin>
                 </Button>
-                <Button fx:id="btnDelete" minWidth="80.0" mnemonicParsing="false" onAction="#onShowDialog" text="%key.delete">
+                <Button fx:id="btnDelete" minWidth="80.0" mnemonicParsing="false" onAction="#onShowDialog"
+                        text="%key.delete">
                     <HBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
                     </HBox.margin>
                 </Button>
             </children>
         </HBox>
         <AnchorPane maxHeight="30.0" prefHeight="30.0">
             <children>
-                <Button fx:id="btnSearch" layoutX="193.0" minWidth="80.0" mnemonicParsing="false" onAction="#actionSearch" prefHeight="26.0" prefWidth="80.0" text="%key.search" AnchorPane.rightAnchor="0.0" />
-            <CustomTextField fx:id="txtSearch" prefHeight="26.0" prefWidth="211.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="90.0" />
+                <CustomTextField fx:id="txtSearch" prefHeight="26.0" prefWidth="211.0" AnchorPane.leftAnchor="0.0"
+                                 AnchorPane.rightAnchor="90.0" styleClass="search-text-field"/>
+                <Button fx:id="btnSearch" layoutX="193.0" minWidth="80.0" mnemonicParsing="false"
+                        onAction="#actionSearch" prefHeight="26.0" prefWidth="80.0" text="%key.search"
+                        AnchorPane.rightAnchor="0.0"/>
             </children>
             <VBox.margin>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
             </VBox.margin>
         </AnchorPane>
         <AnchorPane fx:id="panel3" VBox.vgrow="ALWAYS">
             <children>
-                <TableView fx:id="tblAddress" prefHeight="200.0" prefWidth="324.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <TableView fx:id="tblAddress" prefHeight="200.0" prefWidth="324.0" AnchorPane.bottomAnchor="0.0"
+                           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                        <TableColumn fx:id="clmnName" prefWidth="183.0" text="%key.fio" />
-                        <TableColumn fx:id="clmnPhone" minWidth="0.0" prefWidth="140.0" text="%key.phone" />
+                        <TableColumn fx:id="clmnName" prefWidth="183.0" text="%key.fio"/>
+                        <TableColumn fx:id="clmnPhone" minWidth="0.0" prefWidth="140.0" text="%key.phone"/>
                     </columns>
                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                     </columnResizePolicy>
                 </TableView>
             </children>
             <VBox.margin>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
             </VBox.margin>
         </AnchorPane>
         <AnchorPane fx:id="panel4">
             <VBox.margin>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
             </VBox.margin>
             <children>
-                <Label fx:id="lblRowsCount" prefHeight="17.0" prefWidth="306.0" text="%key.count" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
-            <ComboBox fx:id="comboLocales" layoutX="153.0" layoutY="1.0" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                <Label fx:id="lblRowsCount" prefHeight="17.0" prefWidth="306.0" text="%key.count"
+                       AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"/>
+                <ComboBox fx:id="comboLocales" layoutX="153.0" layoutY="1.0" prefWidth="150.0"
+                          AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
             </children>
         </AnchorPane>
     </children>
+    <stylesheets>
+        <URL value="@css/addressbook.css"/>
+    </stylesheets>
 </VBox>
